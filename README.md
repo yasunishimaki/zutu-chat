@@ -9,6 +9,7 @@
 ## ドキュメント
 
 - [アプリ概要・構成](headache-doctor-app-overview.md) — 目的、画面、システム構成、データ設計、安全設計、開発方針
+- [文字起こしスプレッドシート列仕様](transcript-sheet-format.md) — RAGデータ作成を依頼するときの形式指定
 
 ## 技術構成（予定）
 
