@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>頭痛博士（デザインモックアップ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-50:#F2FAFE; --sky-100:#E3F3FC; --sky-200:#C5E6F8; --sky-300:#93CFF2;
+  --sky-400:#5FB4E8; --sky-600:#2B8ACB; --sky-700:#1F6EA6; --sky-800:#1B5E8F;
+  --cream:#FAF5EA; --cream-line:#EBDFC8; --cream-ink:#5A4A33;
+  --ink:#2F3A42; --muted:#687985; --line:#DCE9F1; --white:#FFFFFF;
+  --radius:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
+  background:var(--sky-100); color:var(--ink); line-height:1.7;
+}
+.frame{
+  max-width:440px; margin:0 auto; min-height:100dvh; background:var(--white);
+  display:flex; flex-direction:column; position:relative; overflow:hidden;
+  box-shadow:0 0 40px rgba(43,138,203,.12);
+}
+.screen{display:none; flex:1; flex-direction:column; min-height:100dvh;}
+.screen.active{display:flex;}
+
+/* ===== 共通ヘッダー ===== */
+.header{
+  display:flex; align-items:center; gap:10px; padding:14px 18px;
+  background:var(--white); border-bottom:1px solid var(--line);
+  position:sticky; top:0; z-index:10;
+}
+.header .back{
+  border:none; background:var(--sky-50); color:var(--sky-700);
+  width:38px; height:38px; border-radius:50%; font-size:18px; cursor:pointer; flex:none;
+}
+.logo{display:flex; align-items:center; gap:8px; font-weight:700; font-size:19px; color:var(--sky-800);}
+.logo svg{flex:none;}
+.header .sub{font-size:12px; color:var(--muted); margin-left:auto; text-align:right;}
+
+/* ===== 博士スプライト ===== */
+.hakase{
+  background-image:url("レイン博士ビジュアルA.png");
+  background-repeat:no-repeat; background-size:500% auto;
+}
+.pose1{background-position:0% 50%;}
+.pose2{background-position:25% 50%;}
+.pose3{background-position:50% 50%;}
+.pose4{background-position:75% 50%;}
+.pose5{background-position:100% 50%;}
+.hero-figure.pose4{background-position:75% 14%;}
+
+/* ===== ホーム ===== */
+.hero{
+  background:linear-gradient(180deg,var(--sky-100) 0%,var(--white) 100%);
+  padding:22px 20px 10px; text-align:center;
+}
+.hero-row{display:flex; align-items:flex-end; justify-content:center; gap:6px;}
+.hero-figure{
+  width:150px; height:190px; border-radius:24px; background-color:var(--cream);
+  border:1px solid var(--cream-line); flex:none;
+}
+.bubble{
+  position:relative; background:var(--white); border:1.5px solid var(--sky-200);
+  border-radius:18px; padding:12px 14px; font-size:14.5px; text-align:left;
+  color:var(--ink); max-width:200px; margin-bottom:24px;
+}
+.bubble::after{
+  content:""; position:absolute; left:-9px; bottom:14px;
+  border:8px solid transparent; border-right-color:var(--sky-200);
+}
+.bubble b{color:var(--sky-700);}
+.hero h1{font-size:22px; color:var(--sky-800); margin-top:6px;}
+.hero p.lead{font-size:13.5px; color:var(--muted); margin-top:2px;}
+
+.ask-box{padding:14px 20px 4px;}
+.ask-input{
+  display:flex; align-items:center; gap:8px; background:var(--sky-50);
+  border:1.5px solid var(--sky-200); border-radius:999px; padding:6px 6px 6px 18px;
+}
+.ask-input input{
+  flex:1; border:none; background:none; outline:none; font-size:15px;
+  font-family:inherit; color:var(--ink); min-width:0;
+}
+.ask-input input::placeholder{color:#9BB4C4;}
+.icon-btn{
+  width:42px; height:42px; border-radius:50%; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; flex:none;
+}
+.mic{background:var(--white); color:var(--sky-600); border:1.5px solid var(--sky-200);}
+.send{background:var(--sky-600); color:#fff;}
+.hint{font-size:11.5px; color:var(--muted); text-align:center; margin-top:6px;}
+
+.chips-label{font-size:13px; color:var(--muted); padding:12px 22px 4px; font-weight:500;}
+.chips{display:flex; flex-wrap:wrap; gap:8px; padding:2px 20px 8px;}
+.chip{
+  border:1.5px solid var(--sky-200); background:var(--white); color:var(--sky-700);
+  border-radius:999px; padding:8px 14px; font-size:13.5px; cursor:pointer;
+  font-family:inherit; transition:background .15s;
+}
+.chip:hover{background:var(--sky-50);}
+
+.entry-cards{display:flex; gap:12px; padding:12px 20px 8px;}
+.entry{
+  flex:1; border-radius:var(--radius); padding:16px 14px; cursor:pointer; border:none;
+  font-family:inherit; text-align:left; line-height:1.5;
+}
+.entry .big{font-size:16.5px; font-weight:700; display:block; margin-top:8px;}
+.entry .small{font-size:12px; display:block; margin-top:2px;}
+.entry-ask{background:var(--sky-600); color:#fff;}
+.entry-ask .small{color:var(--sky-100);}
+.entry-video{background:var(--sky-50); color:var(--sky-800); border:1.5px solid var(--sky-200);}
+.entry-video .small{color:var(--muted);}
+
+.notice{
+  margin:14px 20px 20px; background:var(--cream); border:1px solid var(--cream-line);
+  border-radius:14px; padding:12px 14px; font-size:12.5px; color:var(--cream-ink);
+}
+
+/* ===== チャット ===== */
+.chat-body{flex:1; overflow-y:auto; padding:18px 16px 130px; background:var(--sky-50);}
+.msg{display:flex; gap:10px; margin-bottom:16px;}
+.msg.user{justify-content:flex-end;}
+.avatar{
+  width:44px; height:44px; border-radius:50%; background-color:var(--cream);
+  border:1.5px solid var(--cream-line); flex:none; background-size:800% auto;
+  background-position:27% 6%; background-repeat:no-repeat;
+  background-image:url("レイン博士ビジュアルA.png");
+}
+.msg .content{max-width:78%;}
+.msg.user .content{max-width:82%;}
+.u-bubble{
+  background:var(--sky-600); color:#fff; border-radius:18px 18px 4px 18px;
+  padding:11px 15px; font-size:15px;
+}
+.d-name{font-size:11.5px; color:var(--muted); margin:2px 0 4px 4px;}
+.d-bubble{
+  background:var(--white); border:1px solid var(--line);
+  border-radius:4px 18px 18px 18px; padding:13px 15px; font-size:15px;
+}
+.d-bubble .oneword{
+  font-weight:700; color:var(--sky-800); font-size:15.5px; display:block; margin-bottom:6px;
+}
+.d-bubble .detail{color:var(--ink); font-size:14.5px;}
+.tools{display:flex; gap:6px; margin-top:10px; flex-wrap:wrap;}
+.tool{
+  font-size:12px; border-radius:999px; padding:5px 12px; cursor:pointer; font-family:inherit;
+  border:1.5px solid var(--sky-200); background:var(--white); color:var(--sky-700);
+}
+.tool.on{background:var(--sky-600); border-color:var(--sky-600); color:#fff;}
+
+.video-card{
+  margin-top:10px; background:var(--white); border:1.5px solid var(--sky-200);
+  border-radius:16px; overflow:hidden;
+}
+.vc-head{font-size:11.5px; color:var(--muted); padding:9px 13px 0;}
+.vc-main{display:flex; gap:12px; padding:8px 13px 12px; align-items:center;}
+.thumb{
+  width:88px; height:60px; border-radius:10px; flex:none;
+  background:linear-gradient(135deg,var(--sky-300),var(--sky-600));
+  display:flex; align-items:center; justify-content:center;
+}
+.thumb svg{opacity:.95;}
+.vc-info{min-width:0;}
+.vc-title{font-size:14.5px; font-weight:700; color:var(--ink);}
+.vc-doctor{font-size:11.5px; color:var(--muted); margin-top:2px;}
+.vc-btn{
+  margin:0 13px 13px; display:block; width:calc(100% - 26px); text-align:center;
+  background:var(--sky-600); color:#fff; border:none; border-radius:999px;
+  padding:10px; font-size:14px; font-weight:500; cursor:pointer; font-family:inherit;
+}
+.related-label{font-size:12px; color:var(--muted); margin:14px 0 6px 4px;}
+
+.typing{display:inline-flex; gap:5px; padding:14px 16px; background:var(--white);
+  border:1px solid var(--line); border-radius:4px 18px 18px 18px;}
+.typing i{width:8px; height:8px; border-radius:50%; background:var(--sky-300);
+  animation:tp 1s infinite;}
+.typing i:nth-child(2){animation-delay:.18s;}
+.typing i:nth-child(3){animation-delay:.36s;}
+@keyframes tp{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+
+.chat-input{
+  position:absolute; bottom:0; left:0; right:0; background:var(--white);
+  border-top:1px solid var(--line); padding:10px 14px 14px;
+}
+.chat-note{font-size:10.5px; color:var(--muted); text-align:center; padding-top:6px;}
+
+/* ===== 動画一覧 ===== */
+.list-body{flex:1; overflow-y:auto; padding:14px 18px 30px; background:var(--sky-50);}
+.search{
+  display:flex; align-items:center; gap:8px; background:var(--white);
+  border:1.5px solid var(--sky-200); border-radius:999px; padding:10px 16px; font-size:14px;
+  color:#9BB4C4; margin-bottom:12px;
+}
+.cat-chips{display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none;}
+.cat-chips::-webkit-scrollbar{display:none;}
+.cat{flex:none; font-size:13px; border-radius:999px; padding:7px 14px; cursor:pointer;
+  border:1.5px solid var(--sky-200); background:var(--white); color:var(--sky-700); font-family:inherit;}
+.cat.on{background:var(--sky-600); border-color:var(--sky-600); color:#fff;}
+.v-item{
+  background:var(--white); border:1px solid var(--line); border-radius:16px;
+  padding:12px; display:flex; gap:12px; margin-bottom:10px; align-items:center;
+}
+.toast{
+  position:fixed; bottom:90px; left:50%; transform:translateX(-50%);
+  background:var(--ink); color:#fff; font-size:13px; border-radius:999px;
+  padding:9px 18px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:99;
+  white-space:nowrap;
+}
+.toast.show{opacity:.92;}
+@media (min-width:441px){ body{padding:24px 0;} .frame{border-radius:28px; min-height:calc(100dvh - 48px);} .screen{min-height:calc(100dvh - 48px);} }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <!-- ============ ホーム ============ -->
+  <section class="screen active" id="home">
+    <div class="header">
+      <div class="logo">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3.5 6.6 3.5 11h17C20.5 6.6 17 3 12 3Z" fill="#5FB4E8"/><path d="M12 11v7a2 2 0 0 0 4 0" stroke="#2B8ACB" stroke-width="1.8" stroke-linecap="round" fill="none"/><circle cx="7" cy="15.5" r="1" fill="#93CFF2"/><circle cx="17.5" cy="15" r="1" fill="#93CFF2"/></svg>
+        頭痛博士
+      </div>
+      <div class="sub">頭痛専門医の解説動画を<br>やさしく案内します</div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-row">
+        <div class="hero-figure hakase pose4" role="img" aria-label="レイン博士"></div>
+        <div class="bubble">こんにちは、<b>レイン博士</b>じゃ。<br>頭痛のこと、なんでも聞いてくだされ。</div>
+      </div>
+    </div>
+
+    <div class="ask-box">
+      <div class="ask-input">
+        <input id="homeInput" type="text" placeholder="例：雨の前に頭が痛くなるのはなぜ？">
+        <button class="icon-btn mic" onclick="toast('モックアップのため音声入力は動きません')" aria-label="音声で質問">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
+        </button>
+        <button class="icon-btn send" onclick="askFromInput()" aria-label="質問を送る">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
+        </button>
+      </div>
+      <div class="hint">文字でも音声でも質問できます</div>
+    </div>
+
+    <div class="chips-label">よくある質問</div>
+    <div class="chips" id="exampleChips"></div>
+
+    <div class="entry-cards">
+      <button class="entry entry-ask" onclick="ask('片頭痛とはどんな頭痛？')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M21 12a8 8 0 1 0-3.1 6.3L21 19l-.8-3.1A7.9 7.9 0 0 0 21 12Z"/></svg>
+        <span class="big">博士に聞く</span>
+        <span class="small">質問すると動画から探して答えます</span>
+      </button>
+      <button class="entry entry-video" onclick="showScreen('videos')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1B5E8F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="m10 9.5 5 2.5-5 2.5v-5Z" fill="#1B5E8F"/></svg>
+        <span class="big">動画を見る</span>
+        <span class="small">専門医の解説動画 60本</span>
+      </button>
+    </div>
+
+    <div class="notice">
+      頭痛博士は、頭痛専門医の解説動画を案内するキャラクターです。<b>診断や治療の判断は行いません。</b>急に激しい頭痛が起きたときは、ためらわず医療機関へご相談ください。
+    </div>
+  </section>
+
+  <!-- ============ チャット ============ -->
+  <section class="screen" id="chat">
+    <div class="header">
+      <button class="back" onclick="showScreen('home')" aria-label="戻る">←</button>
+      <div class="avatar" aria-hidden="true"></div>
+      <div>
+        <div style="font-weight:700; font-size:16px; color:var(--sky-800);">レイン博士</div>
+        <div style="font-size:11.5px; color:var(--muted);">専門医の動画から探して答えます</div>
+      </div>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-input">
+      <div class="ask-input">
+        <input id="chatInput" type="text" placeholder="続けて質問できます">
+        <button class="icon-btn mic" onclick="toast('モックアップのため音声入力は動きません')" aria-label="音声で質問">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
+        </button>
+        <button class="icon-btn send" onclick="askFromChat()" aria-label="質問を送る">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg>
+        </button>
+      </div>
+      <div class="chat-note">※デザイン確認用モックアップです。回答はダミーで、実際のAI回答ではありません。</div>
+    </div>
+  </section>
+
+  <!-- ============ 動画一覧 ============ -->
+  <section class="screen" id="videos">
+    <div class="header">
+      <button class="back" onclick="showScreen('home')" aria-label="戻る">←</button>
+      <div class="logo" style="font-size:17px;">解説動画をさがす</div>
+    </div>
+    <div class="list-body">
+      <div class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        キーワードで検索
+      </div>
+      <div class="cat-chips" id="catChips"></div>
+      <div id="videoList"></div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+const EXAMPLES = [
+  "雨の前に頭が痛くなるのはなぜ？",
+  "片頭痛とはどんな頭痛？",
+  "頭痛薬はいつ飲めばいい？",
+  "子どもの頭痛について知りたい",
+  "病院へ行った方がよい頭痛は？"
+];
+
+const CATEGORIES = ["すべて","片頭痛","緊張型頭痛","群発頭痛","天気と頭痛","頭痛薬","子どもの頭痛","女性と頭痛","生活習慣","頭痛ダイアリー","受診を考える目安"];
+
+const VIDEOS = [
+  {title:"天気と片頭痛", doctor:"頭痛 太郎 医師（○○大学病院 脳神経内科）", cat:"天気と頭痛"},
+  {title:"片頭痛とはなにか", doctor:"頭痛 太郎 医師（○○大学病院 脳神経内科）", cat:"片頭痛"},
+  {title:"頭痛薬との上手なつきあい方", doctor:"偏頭 花子 医師（△△クリニック 頭痛外来）", cat:"頭痛薬"},
+  {title:"子どもの頭痛で気をつけたいこと", doctor:"偏頭 花子 医師（△△クリニック 頭痛外来）", cat:"子どもの頭痛"}
+];
+
+const ANSWERS = {
+  "雨の前に頭が痛くなるのはなぜ？": {
+    one:"気圧の変化が、片頭痛のきっかけになる人がいます。",
+    easy:"雨の前は空気の圧力（気圧）が下がります。その変化がきっかけで頭が痛くなる人がいるのじゃ。ただし、すべての頭痛が天気のせいとは限らんよ。天気と頭痛の記録をつけると、自分の傾向が見えてくるぞ。",
+    detail:"気圧の低下は片頭痛の誘発因子のひとつと考えられています。ただし、すべての頭痛が天候によるものとは限りません。天気・睡眠・頭痛が起きた時間を記録すると、ご自身の傾向を確認しやすくなります。",
+    video:VIDEOS[0],
+    related:["頭痛ダイアリーってなに？","片頭痛とはどんな頭痛？","頭痛薬はいつ飲めばいい？"]
+  },
+  "片頭痛とはどんな頭痛？": {
+    one:"ズキンズキンと脈打つような痛みが特徴の頭痛です。",
+    easy:"頭の片側（ときには両側）がズキンズキンと痛んで、動くとつらくなるのが特徴じゃ。光や音がいやに感じる人も多いぞ。くわしくは動画で専門の先生が説明してくれておる。",
+    detail:"片頭痛は、拍動性の頭痛発作を繰り返す疾患で、体動による悪化、悪心、光過敏・音過敏などを伴うことがあります。詳しい特徴は専門医の動画で解説されています。",
+    video:VIDEOS[1],
+    related:["雨の前に頭が痛くなるのはなぜ？","頭痛薬はいつ飲めばいい？","病院へ行った方がよい頭痛は？"]
+  },
+  "頭痛薬はいつ飲めばいい？": {
+    one:"飲むタイミングと回数には、大切なコツがあります。",
+    easy:"がまんしすぎても、飲みすぎてもよくないのじゃ。飲む回数が多くなりすぎると、かえって頭痛がふえることもある。くわしいタイミングは動画で先生が説明しておるよ。",
+    detail:"鎮痛薬は使用のタイミングと頻度が重要です。使用回数が多い状態が続くと、薬剤の使用過多による頭痛につながることが知られています。詳しくは専門医の動画をご覧ください。",
+    video:VIDEOS[2],
+    related:["片頭痛とはどんな頭痛？","頭痛ダイアリーってなに？","病院へ行った方がよい頭痛は？"]
+  },
+  "子どもの頭痛について知りたい": {
+    one:"子どもにも片頭痛はあり、大人と違う特徴があります。",
+    easy:"子どもの頭痛は、大人より短い時間で治まったり、おなかが痛くなったりすることもあるのじゃ。様子で気をつけたいポイントを、動画で先生がやさしく説明しておるよ。",
+    detail:"小児の片頭痛は持続時間が短い、両側性が多い、消化器症状を伴うことがあるなど、成人と異なる特徴があります。観察のポイントは専門医の動画で解説されています。",
+    video:VIDEOS[3],
+    related:["病院へ行った方がよい頭痛は？","頭痛ダイアリーってなに？","片頭痛とはどんな頭痛？"]
+  },
+  "病院へ行った方がよい頭痛は？": {
+    one:"「いつもと違う」「突然の激しい痛み」は受診の目安です。",
+    easy:"突然のはげしい頭痛、だんだんひどくなる頭痛、手足のしびれや発熱をともなう頭痛は、はやめにお医者さんに相談してほしいのじゃ。迷ったら受診するのが安心じゃよ。",
+    detail:"突然発症する激しい頭痛、増悪していく頭痛、神経症状（しびれ・麻痺・視覚の異常）や発熱を伴う頭痛は、医療機関への受診をおすすめします。受診の目安は専門医の動画で解説されています。",
+    video:VIDEOS[1],
+    related:["片頭痛とはどんな頭痛？","頭痛薬はいつ飲めばいい？"]
+  }
+};
+
+const FALLBACK = {
+  one:"（モックアップのためダミー回答です）",
+  easy:"実際のアプリでは、ここに専門医の動画から探した内容をもとに、わしがやさしく答えるのじゃ。",
+  detail:"実際のアプリでは、登録された文字起こしデータを検索し、根拠のある回答と参考動画を表示します。",
+  video:VIDEOS[0],
+  related:EXAMPLES.slice(0,3)
+};
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+
+function ask(q){
+  showScreen('chat');
+  const body=document.getElementById('chatBody');
+  body.insertAdjacentHTML('beforeend',
+    `<div class="msg user"><div class="content"><div class="u-bubble">${esc(q)}</div></div></div>`);
+  const tid='t'+Date.now();
+  body.insertAdjacentHTML('beforeend',
+    `<div class="msg" id="${tid}"><div class="avatar"></div><div class="content"><div class="typing"><i></i><i></i><i></i></div></div></div>`);
+  body.scrollTop=body.scrollHeight;
+  setTimeout(()=>{ document.getElementById(tid).remove(); answer(q); },1100);
+}
+function answer(q){
+  const a=ANSWERS[q]||FALLBACK;
+  const id='a'+Date.now();
+  const rel=a.related.map(r=>`<button class="chip" onclick="ask('${r.replace(/'/g,"\\'")}')">${esc(r)}</button>`).join('');
+  const html=`
+  <div class="msg">
+    <div class="avatar"></div>
+    <div class="content">
+      <div class="d-name">レイン博士</div>
+      <div class="d-bubble">
+        <span class="oneword">${esc(a.one)}</span>
+        <span class="detail" id="${id}-text">${esc(a.easy)}</span>
+        <div class="tools">
+          <button class="tool on" id="${id}-easy" onclick="setMode('${id}','easy')">やさしく</button>
+          <button class="tool" id="${id}-detail" onclick="setMode('${id}','detail')">詳しく</button>
+          <button class="tool" onclick="speak('${id}')">🔊 読み上げる</button>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="vc-head">参考にした動画</div>
+        <div class="vc-main">
+          <div class="thumb"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg></div>
+          <div class="vc-info">
+            <div class="vc-title">「${esc(a.video.title)}」</div>
+            <div class="vc-doctor">${esc(a.video.doctor)}</div>
+          </div>
+        </div>
+        <button class="vc-btn" onclick="toast('実際のアプリではYouTube動画が開きます')">この動画を見る</button>
+      </div>
+      <div class="related-label">続けて聞けます</div>
+      <div class="chips" style="padding:0;">${rel}</div>
+    </div>
+  </div>`;
+  const body=document.getElementById('chatBody');
+  body.insertAdjacentHTML('beforeend',html);
+  window._answers=window._answers||{}; window._answers[id]=a;
+  body.scrollTop=body.scrollHeight;
+}
+function setMode(id,mode){
+  const a=window._answers[id];
+  document.getElementById(id+'-text').textContent=a[mode];
+  document.getElementById(id+'-easy').classList.toggle('on',mode==='easy');
+  document.getElementById(id+'-detail').classList.toggle('on',mode==='detail');
+}
+function speak(id){
+  const a=window._answers[id];
+  const on=document.getElementById(id+'-detail').classList.contains('on');
+  const u=new SpeechSynthesisUtterance(a.one+" "+(on?a.detail:a.easy));
+  u.lang='ja-JP'; u.rate=0.95;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+function askFromInput(){
+  const v=document.getElementById('homeInput').value.trim();
+  ask(v||EXAMPLES[0]);
+  document.getElementById('homeInput').value='';
+}
+function askFromChat(){
+  const v=document.getElementById('chatInput').value.trim();
+  if(!v)return;
+  ask(v);
+  document.getElementById('chatInput').value='';
+}
+document.getElementById('homeInput').addEventListener('keydown',e=>{if(e.key==='Enter')askFromInput();});
+document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')askFromChat();});
+
+document.getElementById('exampleChips').innerHTML=
+  EXAMPLES.map(q=>`<button class="chip" onclick="ask('${q}')">${q}</button>`).join('');
+
+document.getElementById('catChips').innerHTML=
+  CATEGORIES.map((c,i)=>`<button class="cat ${i===0?'on':''}" onclick="this.parentNode.querySelectorAll('.cat').forEach(x=>x.classList.remove('on'));this.classList.add('on');">${c}</button>`).join('');
+
+document.getElementById('videoList').innerHTML=
+  VIDEOS.map(v=>`
+  <div class="v-item">
+    <div class="thumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg></div>
+    <div class="vc-info">
+      <div class="vc-title">${v.title}</div>
+      <div class="vc-doctor">${v.doctor}</div>
+      <div class="vc-doctor" style="color:var(--sky-600);">${v.cat}</div>
+    </div>
+  </div>`).join('');
+</script>
+</body>
+</html>
